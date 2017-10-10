@@ -42,7 +42,3 @@ cache:
     - "$HOME/.gradle/caches/"
     - "$HOME/.gradle/wrapper/"
     - "$HOME/.sonar/cache/"
-
-env:
-  global:
-    - secure: S8MhhgBq1SVgthw3jDBmsKtUu1so4t+uVMSEpGSVENpxJc55APQKMJNfZAtxLlObjJSClTvtZj0tjNTTrfyKebrunJ1xGriJRTCvhiKeywDE3iRHBIV4ZIUS8Yc4i8CqVTF8gqbshf2gvwc+kvOj2r2BvMPPM3MkjcTI3f9q56I=
