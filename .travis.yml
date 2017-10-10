@@ -22,7 +22,7 @@ sudo: false
 
 addons:
   sonarcloud:
-    organization: samza
+    organization: isolis-github
     branches:
       - master
       - travis-sonarcloud
