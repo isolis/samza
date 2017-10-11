@@ -25,7 +25,7 @@ addons:
     organization: isolis-github
     branches:
       - master
-      - travis-sonarcloud
+      - sonarcloud-base
       - sonarcloud
 jdk:
   - oraclejdk8
