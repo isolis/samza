@@ -82,6 +82,7 @@ public class ConfigManager {
   private final String pollingIntervalOpt = "configManager.polling.interval";
   private static final String SERVER_URL_OPT = "samza.autoscaling.server.url";
   private static final String YARN_CONTAINER_COUNT_OPT = "yarn.container.count";
+  private boolean shutdown = false;
 
   public ConfigManager(Config config) {
 
@@ -91,6 +92,7 @@ public class ConfigManager {
     }
     String rmAddress = config.get(rmAddressOpt);
     int rmPort = config.getInt(rmPortOpt);
+
 
     //get job name and id;
     if (!config.containsKey(JobConfig.JOB_NAME())) {
@@ -124,13 +126,14 @@ public class ConfigManager {
   public void run() {
     start();
     try {
-      while (true) {
+      while (!shutdown) {
         Thread.sleep(interval);
         processConfigMessages();
       }
     } catch (InterruptedException e) {
       e.printStackTrace();
       log.warn("Got interrupt in config manager thread, so shutting down");
+      Thread.currentThread().interrupt();
     } finally {
       log.info("Stopping the config manager");
       stop();
@@ -305,6 +308,7 @@ public class ConfigManager {
       }
     } catch (InterruptedException e) {
       e.printStackTrace();
+      Thread.currentThread().interrupt();
     }
 
     log.info("Killed the current job successfully");
@@ -370,6 +374,13 @@ public class ConfigManager {
     Config config = cmdline.loadConfig(options);
     ConfigManager configManager = new ConfigManager(config);
     configManager.run();
+  }
+
+  /**
+   * Shut down the ConfigManager by stopping the loop
+   */
+  public void shutdown(){
+    shutdown = true;
   }
 
 

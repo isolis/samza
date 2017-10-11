@@ -54,7 +54,8 @@ public class AvroFileHdfsReader implements SingleFileHdfsReader {
 
   @Override
   public void open(String pathStr, String singleFileOffset) {
-    LOG.info(String.format("%s: Open file [%s] with file offset [%s] for read", systemStreamPartition, pathStr, singleFileOffset));
+    LOG.info(String.format("%s: Open file [%s] with file offset [%s] for read", systemStreamPartition, pathStr,
+        singleFileOffset));
     Path path = new Path(pathStr);
     try {
       AvroFSInput input = new AvroFSInput(FileContext.getFileContext(path.toUri()), path);
