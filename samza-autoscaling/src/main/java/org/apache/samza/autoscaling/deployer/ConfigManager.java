@@ -379,7 +379,7 @@ public class ConfigManager {
   /**
    * Shut down the ConfigManager by stopping the loop
    */
-  public void shutdown(){
+  public void shutdown() {
     shutdown = true;
   }
 

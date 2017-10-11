@@ -150,7 +150,7 @@ public abstract class AbstractApplicationRunner extends ApplicationRunner {
         // Write the plan json to plan path
         File file = new File(planPath + "/plan.json");
         file.setReadable(true, false);
-        try (PrintWriter writer = new PrintWriter(file, "UTF-8")){
+        try (PrintWriter writer = new PrintWriter(file, "UTF-8")) {
           writer.println(content);
         } catch (Exception e) {
           log.warn("Failed to write execution plan json to file", e);
