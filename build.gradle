@@ -25,6 +25,10 @@ buildscript {
   apply from: file('gradle/buildscript.gradle'), to: buildscript
 }
 
+plugins {
+  id "org.sonarqube" version "2.5"
+}
+
 allprojects {
   repositories {
     mavenCentral()
@@ -694,5 +698,35 @@ project(":samza-test_$scalaVersion") {
     from '../NOTICE'
     from(configurations.runtime) { into("lib/") }
     from(configurations.archives.artifacts.files) { into("lib/") }
+  }
+}
+
+def project_list = []
+project_list += 'samza-api'
+project_list += "samza-core"
+project_list += 'samza-azure'
+project_list += "samza-autoscaling"
+project_list += 'samza-elasticsearch'
+project_list += "samza-kafka"
+project_list += 'samza-log4j'
+project_list += "samza-yarn"
+project_list += "samza-shell"
+project_list += "samza-kv"
+project_list += "samza-kv-inmemory"
+project_list += "samza-kv-rocksdb"
+project_list += "samza-hdfs"
+project_list += "samza-rest"
+project_list += "samza-test"
+
+sonarqube {
+  properties {
+    Set<File> sonar_java_binaries = []
+    Set<File> sonar_java_libraries = []
+    project_list.each{
+      sonar_java_binaries += new File("$projectDir/${it}/build/classes")
+      sonar_java_libraries += new File("$projectDir/${it}/build/libs")
+    }
+    property "sonar.java.binaries", sonar_java_binaries.findAll { it.exists() }
+    property "sonar.java.libraries", sonar_java_libraries.findAll { it.exists() }
   }
 }
